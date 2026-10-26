@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saffron Street Kitchen | Restaurant</title>
+
+<style>
+:root {
+    --green: #7b2d26;
+    --gold: #e6a23c;
+    --cream: #fff8ed;
+    --white: #ffffff;
+    --text: #34251f;
+    --muted: #796b63;
+    --border: #eadfd2;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+
+.topbar {
+    background: var(--green);
+    color: white;
+    text-align: center;
+    padding: 9px;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+header {
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--border);
+}
+
+.nav {
+    max-width: 1250px;
+    margin: auto;
+    padding: 15px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    font-family: Georgia, serif;
+    color: var(--green);
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo small {
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.nav button, .btn {
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 12px 16px;
+    font-weight: bold;
+}
+
+.nav button:hover, .btn:hover {
+    background: #9b4034;
+}
+
+.hero {
+    background:
+        linear-gradient(90deg, #3d1713ed, #3d171380, #3d171330),
+        url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1800&q=85")
+        center/cover;
+    min-height: 390px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.hero-content {
+    max-width: 1250px;
+    width: 100%;
+    margin: auto;
+    padding: 55px 22px;
+}
+
+.hero .label {
+    color: #ffd27a;
+    letter-spacing: 3px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-family: Georgia, serif;
+    font-size: clamp(38px, 6vw, 68px);
+    line-height: 1.1;
+    margin: 18px 0;
+}
+
+.hero p {
+    max-width: 550px;
+    line-height: 1.8;
+    color: #f0f3ee;
+}
+
+.hero a {
+    display: inline-block;
+    margin-top: 15px;
+    background: var(--gold);
+    color: #3d2117;
+    padding: 13px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+main {
+    max-width: 1250px;
+    margin: auto;
+    padding: 35px 22px;
+}
+
+.heading { margin-bottom: 20px; }
+
+.heading small {
+    color: #a8781e;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: Georgia, serif;
+    color: var(--green);
+    font-size: 32px;
+    margin: 8px 0;
+}
+
+.heading p { color: var(--muted); }
+
+.controls {
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+input, select, textarea {
+    width: 100%;
+    border: 1px solid #d7ded6;
+    background: white;
+    border-radius: 7px;
+    padding: 13px;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #e6a23c66;
+    border-color: var(--gold);
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 25px;
+    align-items: start;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.food-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.food-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px #7b2d2615;
+}
+
+.food-image {
+    height: 170px;
+    background: #e7e9e1;
+    overflow: hidden;
+    position: relative;
+}
+
+.food-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.pill {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ffffffed;
+    color: var(--green);
+    padding: 6px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.food-info {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 9px;
+}
+
+.food-info h3 {
+    margin: 0;
+    font-size: 17px;
+}
+
+.food-info p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+    min-height: 40px;
+    margin: 0;
+}
+
+.food-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.price {
+    font-weight: bold;
+    color: var(--green);
+    white-space: nowrap;
+}
+
+.food-bottom .btn {
+    padding: 9px 12px;
+    font-size: 12px;
+}
+
+.cart {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 19px;
+    position: sticky;
+    top: 90px;
+    box-shadow: 0 8px 25px #7b2d260b;
+}
+
+.cart h2 {
+    font-size: 25px;
+    margin: 0 0 15px;
+}
+
+.empty {
+    text-align: center;
+    padding: 20px 5px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.cart-item {
+    border-top: 1px solid var(--border);
+    padding: 13px 0;
+}
+
+.item-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cart-item small {
+    display: block;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.quantity button {
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: #f4f6f2;
+    padding: 5px 9px;
+    color: var(--green);
+}
+
+.quantity .remove {
+    margin-left: auto;
+    color: #a83232;
+    background: #fae8e5;
+    border: none;
+}
+
+.summary {
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+}
+
+.sum-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.sum-row.total {
+    border-top: 1px solid var(--border);
+    padding-top: 13px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--green);
+}
+
+.customer {
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+    padding-top: 16px;
+}
+
+.customer h3 {
+    font-family: Georgia, serif;
+    color: var(--green);
+}
+
+.customer label {
+    display: block;
+    font-weight: bold;
+    font-size: 13px;
+    margin: 12px 0 6px;
+}
+
+.customer textarea {
+    min-height: 75px;
+    resize: vertical;
+}
+
+.customer .btn {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.btn.light {
+    background: #edf1eb;
+    color: var(--green);
+}
+
+.notice {
+    display: none;
+    padding: 11px;
+    border-radius: 7px;
+    margin-top: 12px;
+    line-height: 1.5;
+    font-size: 13px;
+}
+
+footer {
+    background: #3d1713;
+    color: white;
+    text-align: center;
+    padding: 32px 15px;
+    margin-top: 30px;
+}
+
+footer strong {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    color: var(--gold);
+}
+
+footer p {
+    color: #d4ded6;
+    font-size: 13px;
+}
+
+@media (max-width: 1050px) {
+    .layout { grid-template-columns: minmax(0, 1fr) 310px; }
+    .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+    .cart { position: static; }
+    .hero { min-height: 340px; }
+}
+
+@media (max-width: 480px) {
+    main { padding: 25px 13px; }
+    .controls { grid-template-columns: 1fr; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .food-image { height: 220px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+    AUTHENTIC INDIAN FLAVOURS · FRESH INGREDIENTS · MADE WITH CARE
+</div>
+
+<header>
+    <nav class="nav">
+        <div class="logo">
+            Saffron Street Kitchen
+            <small>INDIAN RESTAURANT</small>
+        </div>
+
+        <button onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">
+            🛒 Cart (<span id="cartCount">0</span>)
+        </button>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="label">A TASTE OF INDIA.</div>
+        <h1>Traditional flavours.<br>Made fresh every day.</h1>
+        <p>
+            Discover Indian favourites, sizzling snacks, refreshing drinks, and
+            delicious desserts — freshly prepared for every craving.
+        </p>
+        <a href="#menu">EXPLORE OUR MENU</a>
+    </div>
+</section>
+
+<main>
+    <section id="menu">
+        <div class="heading">
+            <small>FRESH FROM OUR KITCHEN</small>
+            <h2>Our Menu</h2>
+            <p>Indian classics and modern favourites, all in one place.</p>
+            <span id="resultCount"></span>
+        </div>
+
+        <div class="controls">
+            <input id="search" type="search"
+                   placeholder="Search food by name...">
+
+            <select id="category">
+                <option value="All">All Categories</option>
+                <option>Meals</option>
+                <option>Pizza</option>
+                <option>Burgers</option>
+                <option>Snacks</option>
+                <option>Desserts</option>
+                <option>Drinks</option>
+                <option>Starters</option>
+            </select>
+        </div>
+
+        <div class="layout">
+            <section>
+                <div class="menu-grid" id="menuGrid"></div>
+            </section>
+
+            <aside class="cart" id="cart">
+                <h2>Your Order</h2>
+                <div id="cartItems"></div>
+
+                <div class="summary">
+                    <div class="sum-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">₹0.00</span>
+                    </div>
+
+                    <div class="sum-row">
+                        <span>Delivery Fee</span>
+                        <span id="delivery">₹0.00</span>
+                    </div>
+
+                    <div class="sum-row total">
+                        <span>Total</span>
+                        <span id="total">₹0.00</span>
+                    </div>
+                </div>
+
+                <div id="notice" class="notice" role="status"></div>
+
+                <form class="customer" id="orderForm">
+                    <h3>Delivery Details</h3>
+
+                    <label for="customerName">Full Name *</label>
+                    <input id="customerName" required maxlength="80"
+                           placeholder="Enter your name">
+
+                    <label for="phone">Phone Number *</label>
+                    <input id="phone" type="tel" required
+                           pattern="[0-9+ -]{10,15}"
+                           placeholder="Enter phone number">
+
+                    <label for="address">Delivery Address *</label>
+                    <textarea id="address" required maxlength="300"
+                              placeholder="Enter delivery address"></textarea>
+
+                    <button class="btn" type="submit">
+                        Place Demo Order
+                    </button>
+
+                    <button class="btn light" type="button" id="clearCart">
+                        Clear Cart
+                    </button>
+                </form>
+            </aside>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <strong>Saffron Street Kitchen</strong>
+    <p>Indian Restaurant | Online Food Ordering Demo</p>
+    <p>Demo orders are not sent to a real restaurant.</p>
+</footer>
+
+<script>
+const foods = [
+    {
+        id: 1, name: "Vegetable Biryani", category: "Meals",
+        price: 140,
+        description: "Fragrant rice, vegetables and aromatic spices.",
+        image: "https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=800&q=85",
+        backup: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 2, name: "Masala Dosa", category: "Meals",
+        price: 90,
+        description: "Crispy dosa with classic accompaniments.",
+        image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=85",
+        backup: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 3, name: "Margherita Pizza", category: "Pizza",
+        price: 220,
+        description: "Tomato, mozzarella and fragrant herbs.",
+        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 4, name: "Garden Veg Pizza", category: "Pizza",
+        price: 260,
+        description: "Fresh vegetables with melted cheese.",
+        image: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=800&q=85",
+        backup: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 5, name: "Classic Burger", category: "Burgers",
+        price: 130,
+        description: "Toasted bun, savoury patty and fresh greens.",
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 6, name: "Cheese Burger", category: "Burgers",
+        price: 160,
+        description: "A burger with melted cheese and toppings.",
+        image: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 7, name: "French Fries", category: "Snacks",
+        price: 80,
+        description: "Golden and crispy seasoned potato fries.",
+        image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 8, name: "Samosa", category: "Snacks",
+        price: 40,
+        description: "Crispy pastry with spiced potato filling.",
+        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 9, name: "Chocolate Cake", category: "Desserts",
+        price: 120,
+        description: "Rich chocolate cake for a sweet finish.",
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 10, name: "Vanilla Ice Cream", category: "Desserts",
+        price: 70,
+        description: "Smooth, creamy ice cream served chilled.",
+        image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 11, name: "Fresh Lime Juice", category: "Drinks",
+        price: 50,
+        description: "Refreshing citrus drink with a tangy taste.",
+        image: "https://images.unsplash.com/photo-1513558161293-cdaf765edfd7?auto=format&fit=crop&w=800&q=85",
+        backup: "https://images.unsplash.com/photo-1515003197210-e0cd7184f8b5?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 12, name: "Cold Coffee", category: "Drinks",
+        price: 100,
+        description: "Chilled coffee blended until creamy.",
+        image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 13, name: "Paneer Tikka", category: "Starters",
+        price: 180,
+        description: "Grilled paneer with a flavourful marinade.",
+        image: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 14, name: "Garlic Bread", category: "Starters",
+        price: 100,
+        description: "Toasted bread with garlic, herbs and butter.",
+        image: "https://images.unsplash.com/photo-1619531040576-f94167406615?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 15, name: "Creamy Pasta", category: "Meals",
+        price: 210,
+        description: "Pasta tossed in a creamy herb sauce.",
+        image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 16, name: "Noodles", category: "Meals",
+        price: 150,
+        description: "Stir-fried noodles with vegetables.",
+        image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 17, name: "Pancakes", category: "Desserts",
+        price: 140,
+        description: "Soft pancakes with a sweet topping.",
+        image: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 18, name: "Orange Juice", category: "Drinks",
+        price: 80,
+        description: "A refreshing citrus drink.",
+        image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 19, name: "Club Sandwich", category: "Snacks",
+        price: 150,
+        description: "Layered sandwich with fresh vegetables.",
+        image: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 20, name: "Chocolate Brownie", category: "Desserts",
+        price: 95,
+        description: "A rich chocolate treat with a soft centre.",
+        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 21, name: "Spring Rolls", category: "Starters",
+        price: 120,
+        description: "Crispy rolls with a savoury filling.",
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=85"
+    },
+    {
+        id: 22, name: "Mint Lemon Cooler", category: "Drinks",
+        price: 75,
+        description: "A chilled citrus drink with mint.",
+        image: "https://images.unsplash.com/photo-1513558161293-cdaf765edfd7?auto=format&fit=crop&w=800&q=85",
+        backup: "https://images.unsplash.com/photo-1515003197210-e0cd7184f8b5?auto=format&fit=crop&w=800&q=85"
+    }
+];
+
+const KEY = "saffronStreetCart";
+let cart = loadCart();
+
+function money(value) {
+    return "₹" + value.toFixed(2);
+}
+
+function loadCart() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(KEY) || "{}");
+        const result = {};
+
+        foods.forEach(food => {
+            const quantity = saved[food.id];
+
+            if (Number.isInteger(quantity) && quantity > 0 && quantity <= 99) {
+                result[food.id] = quantity;
+            }
+        });
+
+        return result;
+    } catch {
+        return {};
+    }
+}
+
+function saveCart() {
+    localStorage.setItem(KEY, JSON.stringify(cart));
+}
+
+function showMessage(text, error = false) {
+    const box = document.getElementById("notice");
+    box.textContent = text;
+    box.style.display = "block";
+    box.style.background = error ? "#fae8e5" : "#e4f2e7";
+    box.style.color = error ? "#a83232" : "#245447";
+}
+
+function renderFoods() {
+    const query = document.getElementById("search").value.trim().toLowerCase();
+    const category = document.getElementById("category").value;
+
+    const filtered = foods.filter(food =>
+        (category === "All" || food.category === category) &&
+        (food.name.toLowerCase().includes(query) ||
+         food.description.toLowerCase().includes(query))
+    );
+
+    document.getElementById("resultCount").textContent =
+        filtered.length + " dishes available";
+
+    const grid = document.getElementById("menuGrid");
+
+    if (filtered.length === 0) {
+        grid.innerHTML =
+            "<p>No food found. Try another search or category.</p>";
+        return;
+    }
+
+    grid.innerHTML = filtered.map(food => `
+        <article class="food-card">
+            <div class="food-image">
+                <img
+                    src="${food.image}"
+                    alt="${food.name}"
+                    loading="lazy"
+                    data-backup="${food.backup || ""}"
+                    onerror="useBackupImage(this)">
+
+                <span class="pill">${food.category}</span>
+            </div>
+
+            <div class="food-info">
+                <h3>${food.name}</h3>
+                <p>${food.description}</p>
+
+                <div class="food-bottom">
+                    <span class="price">${money(food.price)}</span>
+                    <button class="btn" type="button"
+                        onclick="addToCart(${food.id})">Add +</button>
+                </div>
+            </div>
+        </article>
+    `).join("");
+}
+
+function useBackupImage(image) {
+    const backup = image.dataset.backup;
+    const finalFallback =
+        "https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&w=800&q=85";
+
+    if (backup && image.dataset.triedBackup !== "yes") {
+        image.dataset.triedBackup = "yes";
+        image.src = backup;
+    } else if (image.dataset.triedFinal !== "yes") {
+        image.dataset.triedFinal = "yes";
+        image.dataset.backup = "";
+        image.dataset.triedFinal = "yes";
+        image.src = finalFallback;
+    } else {
+        image.onerror = null;
+        image.alt = "Food image could not be loaded. Please check your internet connection.";
+    }
+}
+
+function addToCart(id) {
+    cart[id] = Math.min(99, (cart[id] || 0) + 1);
+    saveCart();
+    renderFoods();
+    renderCart();
+    document.getElementById("notice").style.display = "none";
+}
+
+function changeQuantity(id, amount) {
+    const quantity = (cart[id] || 0) + amount;
+
+    if (quantity <= 0) {
+        delete cart[id];
+    } else {
+        cart[id] = Math.min(99, quantity);
+    }
+
+    saveCart();
+    renderFoods();
+    renderCart();
+}
+
+function removeItem(id) {
+    delete cart[id];
+    saveCart();
+    renderFoods();
+    renderCart();
+}
+
+function renderCart() {
+    const selected = foods.filter(food => cart[food.id]);
+
+    const count = selected.reduce(
+        (sum, food) => sum + cart[food.id], 0
+    );
+
+    const subtotal = selected.reduce(
+        (sum, food) => sum + food.price * cart[food.id], 0
+    );
+
+    const delivery = subtotal > 0 ? 30 : 0;
+
+    document.getElementById("cartCount").textContent = count;
+    document.getElementById("subtotal").textContent = money(subtotal);
+    document.getElementById("delivery").textContent = money(delivery);
+    document.getElementById("total").textContent =
+        money(subtotal + delivery);
+
+    const container = document.getElementById("cartItems");
+
+    if (selected.length === 0) {
+        container.innerHTML =
+            '<div class="empty">Your cart is empty.<br>' +
+            'Add a dish from our menu to begin.</div>';
+        return;
+    }
+
+    container.innerHTML = selected.map(food => `
+        <div class="cart-item">
+            <div class="item-top">
+                <span>${food.name}</span>
+                <span>${money(food.price * cart[food.id])}</span>
+            </div>
+
+            <small>${money(food.price)} per item</small>
+
+            <div class="quantity">
+                <button type="button"
+                    aria-label="Decrease ${food.name}"
+                    onclick="changeQuantity(${food.id}, -1)">−</button>
+
+                <strong>${cart[food.id]}</strong>
+
+                <button type="button"
+                    aria-label="Increase ${food.name}"
+                    ${cart[food.id] >= 99 ? "disabled" : ""}
+                    onclick="changeQuantity(${food.id}, 1)">+</button>
+
+                <button type="button" class="remove"
+                    onclick="removeItem(${food.id})">Remove</button>
+            </div>
+        </div>
+    `).join("");
+}
+
+document.getElementById("search").addEventListener("input", renderFoods);
+document.getElementById("category").addEventListener("change", renderFoods);
+
+document.getElementById("clearCart").addEventListener("click", () => {
+    cart = {};
+    saveCart();
+    renderFoods();
+    renderCart();
+    showMessage("Your cart has been cleared.");
+});
+
+document.getElementById("orderForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (Object.keys(cart).length === 0) {
+        showMessage("Your cart is empty. Add a dish before ordering.", true);
+        return;
+    }
+
+    const form = event.currentTarget;
+
+    if (!form.reportValidity()) return;
+
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const address = document.getElementById("address").value.trim();
+
+    if (!name || !phone || !address) {
+        showMessage("Please fill in all required details.", true);
+        return;
+    }
+
+    const selected = foods.filter(food => cart[food.id]);
+
+    const subtotal = selected.reduce(
+        (sum, food) => sum + food.price * cart[food.id], 0
+    );
+
+    const delivery = 30;
+    const orderId = "SS" + Date.now().toString().slice(-7);
+
+    const orderItems = selected.map(food =>
+        food.name + " x " + cart[food.id] +
+        " = " + money(food.price * cart[food.id])
+    );
+
+    alert(
+        "ORDER SUMMARY\n\n" +
+        "Order ID: " + orderId + "\n\n" +
+        orderItems.join("\n") + "\n\n" +
+        "Subtotal: " + money(subtotal) + "\n" +
+        "Delivery Fee: " + money(delivery) + "\n" +
+        "Total: " + money(subtotal + delivery) + "\n\n" +
+        "Customer: " + name + "\n" +
+        "Phone: " + phone + "\n" +
+        "Address: " + address + "\n\n" +
+        "Demo only: the order was not sent to a restaurant."
+    );
+
+    cart = {};
+    saveCart();
+    renderFoods();
+    renderCart();
+    form.reset();
+
+    showMessage(
+        "Thank you, " + name +
+        "! Your demonstration order was submitted successfully."
+    );
+});
+
+renderFoods();
+renderCart();
+</script>
+
+</body>
+</html>
